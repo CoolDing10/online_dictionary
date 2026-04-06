@@ -139,4 +139,41 @@ int do_search(Messg *messg, char *buf, int sockfd){
     }
     printf("%s\n", buf);
     printf("按回车键退出");
+    fflush(0);
+    getchar();
+    while(enter != '\n'){
+        scanf("%c", &enter);
+    }
+    return 1;
+}
+
+int do_history(Messg *messg, char *buf, int sockfd){ 
+    USER *user;
+    int i;
+    char enter='0';
+    system("clear");
+    bzero(messg, sizeof(*messg));
+    messg->messg_type = 4;
+    memset(buf, 0, 132);
+    buf = (char *)messg;
+
+    send(sockfd, buf, 132, 0);
+    memset(buf, 0, 132);
+    if(recv(sockfd,buf,132,0)==-1){
+        perror("recv");
+        sleep(3);
+        return 0;
+    }
+    user = (USER *)buf;
+    printf("##################历史记录#################\n");
+    for(i=0;i<5;i++){
+        printf("%d.%s\n",(i+1), user->history[i]);
+    }
+    printf("\n");
+    printf("按回车键退出");
+    getchar();
+    while(enter != '\n'){   
+        scanf("%c", &enter);
+    }
+    return 1;
 }

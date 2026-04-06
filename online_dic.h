@@ -38,4 +38,5 @@ int do_register(Messg *messg, char *buf, int sockfd, struct sockaddr_in *servadd
 
 int do_search(Messg *messg, char *buf, int sockfd);
 
+int do_history(Messg *messg, char *buf, int sockfd);
 #endif
