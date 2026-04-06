@@ -67,7 +67,7 @@ int main(void){
 
 
     while(1){
-        if((clientfd=accept(sockfd,(struct sockaddr*)&clientaddr,&peerlen)<0)){
+        if((clientfd=accept(sockfd,(struct sockaddr*)&clientaddr,&peerlen))<0){
             perror("accept");
             return 0;
         }
@@ -115,7 +115,7 @@ int main(void){
                     
                     case 2: // 注册请求
 						// 构建插入SQL语句
-						sprintf(sql,"insert into user values('%s',%d,'a','a','a','a','a');",messg->data.login_data.name,messg->data.login_data.password);
+						sprintf(sql,"insert into user values('%s',%d,'a','a','a','a','a');",messg->data.login_data.name,messg->data.login_data.passwaord);
 						// 执行插入操作
 						if(sqlite3_exec(db,sql,NULL,NULL,&errmsg)!=SQLITE_OK){
 							printf("%s\n",errmsg);
@@ -125,9 +125,9 @@ int main(void){
 						}
 						else{
 							memset(buf,0,132);
-							strcpy(buf,"注册成功");
-							printf("%s\n",buf);
-							send(clientfd,buf,sizeof(buf),0);
+                            strcpy(buf, "注册成功");
+                            printf("%s\n", buf);
+                            send(clientfd,buf,sizeof(buf),0);
 						}
 						break;
 
