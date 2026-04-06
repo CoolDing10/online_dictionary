@@ -1,6 +1,8 @@
 #ifndef _ONLINE_DIC_H_
 #define _ONLINE_DIC_H_
 
+#include <netinet/in.h>
+
 typedef struct information{
     int messg_type;
 
@@ -8,7 +10,7 @@ typedef struct information{
     union {
         struct login_data{
             char name[16];
-            int passwaord;
+            int password;
         } login_data;
 
         char dictionary[24];

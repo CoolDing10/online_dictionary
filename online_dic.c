@@ -62,7 +62,7 @@ int do_login(Messg *messg, char *buf, int sockfd, struct sockaddr_in *servaddr){
     printf("请输入你的名字：\n");
     scanf("%s", messg->data.login_data.name);
     printf("请输入你的密码：\n");
-    scanf("%d", messg->data.login_data.passwaord);
+    scanf("%d", &(messg->data.login_data.password));
 
     memset(buf, 0, 132);
 
@@ -74,7 +74,7 @@ int do_login(Messg *messg, char *buf, int sockfd, struct sockaddr_in *servaddr){
         perror("recv");
         return 0;
     }
-    if(strncmp(buf,"登录成功",sizeof(buf))==0){
+    if(strncmp(buf,"登录成功",8)==0){
         printf("%s\n", buf);
         sleep(1);
         return 1;
@@ -94,7 +94,7 @@ int do_register(Messg *messg, char *buf, int sockfd, struct sockaddr_in *servadd
     printf("请输入你的名字：\n");
     scanf("%s", messg->data.login_data.name);
     printf("请输入你的密码：\n");
-    scanf("%d", messg->data.login_data.passwaord);
+    scanf("%d", &(messg->data.login_data.password));
 
     memset(buf, 0, 132);
     buf = (char *)messg;
@@ -105,7 +105,7 @@ int do_register(Messg *messg, char *buf, int sockfd, struct sockaddr_in *servadd
         perror("recv");
         return 0;
     }
-    if(strncmp(buf,"注册成功",sizeof(buf))==0){
+    if(strncmp(buf,"注册成功",8)==0){
         printf("%s\n", buf);
         sleep(1);
         return 1;

@@ -18,15 +18,15 @@ int main(void){
     struct sockaddr_in servaddr, clientaddr;
     char buf[132];
     Messg *messg;
-    int ret;
+    // int ret;
     socklen_t peerlen;
     int pid;
 
     char sql[128];
     char **resultp;
     int nrow, cloumn;
-    int i, j;
-    int index = 0;
+    // int i, j;
+    // int index = 0;
     sqlite3 *db;
     char *errmsg;
 
@@ -95,14 +95,14 @@ int main(void){
                             printf("%s\n", buf);
                             send(clientfd, buf, 132, 0);
                         }
-                        else if(messg->data.login_data.passwaord==atoi(resultp[8])){
+                        else if(messg->data.login_data.password==atoi(resultp[8])){
                             strcpy(user.name, messg->data.login_data.name);
-                            user.password = messg->data.login_data.passwaord;
+                            user.password = messg->data.login_data.password;
 
                             memset(buf, 0, 132);
                             strcpy(buf,"登录成功");
                             send(clientfd,buf,sizeof(buf),0);
-                            for(i=0;i<5;i++){
+                            for(int i=0;i<5;i++){
 								strcpy(user.history[i],resultp[9+i]);
 							}
                         }
@@ -115,7 +115,7 @@ int main(void){
                     
                     case 2: // 注册请求
 						// 构建插入SQL语句
-						sprintf(sql,"insert into user values('%s',%d,'a','a','a','a','a');",messg->data.login_data.name,messg->data.login_data.passwaord);
+						sprintf(sql,"insert into user values('%s',%d,'a','a','a','a','a');",messg->data.login_data.name,messg->data.login_data.password);
 						// 执行插入操作
 						if(sqlite3_exec(db,sql,NULL,NULL,&errmsg)!=SQLITE_OK){
 							printf("%s\n",errmsg);
@@ -153,13 +153,13 @@ int main(void){
 							char temp1[24],temp2[24];
 							strcpy(temp1,user.history[0]);
 							strcpy(user.history[0],resultp[4]);
-							for(i=1;i<5;i++){
+							for(int i=1;i<5;i++){
 								strcpy(temp2,user.history[i]);
 								strcpy(user.history[i],temp1);
 								strcpy(temp1,temp2);
 							}
 							// 将5个记录写入数据库中
-							for(i=0;i<5;i++){
+							for(int i=0;i<5;i++){
 								sprintf(sql,"update user set history%d='%s' where name='%s';",(i+1),user.history[i],user.name);
 								printf("%s\n",sql);
 								if(sqlite3_exec(db,sql,NULL,NULL,&errmsg)!=SQLITE_OK){

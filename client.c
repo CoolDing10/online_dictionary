@@ -39,7 +39,7 @@ int main(void){
     client_init(&sockfd, &servaddr, serv_port, serv_ip);
 
     while(1){
-        if(cmd_view=begin){
+        if(cmd_view==begin){
             view_begin();
             scanf("%d", &cmd);
             if(cmd==1){
